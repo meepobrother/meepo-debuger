@@ -1,4 +1,4 @@
-import { Directive, HostListener, Input } from '@angular/core';
+import { Directive, HostListener, Input, ElementRef, Renderer2 } from '@angular/core';
 import { LoaderService } from 'meepo-loader';
 import { IntervalService } from 'meepo-event';
 
@@ -16,33 +16,37 @@ export class DebugerDirective {
     _debuger: any;
     @HostListener('touchstart', ['$event'])
     onTouchStart() {
-        // this.showDebuger();
+        this.debuger = this.debuger || 3;
         this.interval.clearAll();
         this.hideDebuger();
+        this.render.setStyle(this.ele.nativeElement, 'opacity', '.7');
         this.interval.add(() => {
             this.num++;
-            if (this.num % 6 == 0) {
+            if (this.num % this.debuger == 0) {
                 this.showDebuger();
             } else {
                 this.hideDebuger();
             }
-            console.log(this.num);
         }, 1000);
     }
 
     @HostListener('touchcancel', ['$event'])
     onTouchCancel() {
         this.interval.clearAll();
+        this.render.setStyle(this.ele.nativeElement, 'opacity', '1');
     }
 
     @HostListener('touchend', ['$event'])
     onTouchEnd() {
         this.interval.clearAll();
+        this.render.setStyle(this.ele.nativeElement, 'opacity', '1');
     }
 
     constructor(
         public loader: LoaderService,
-        public interval: IntervalService
+        public interval: IntervalService,
+        public ele: ElementRef,
+        public render: Renderer2
     ) {
 
     }
