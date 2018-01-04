@@ -14,6 +14,21 @@
  *    IE on Windows Phone and in iOS.
  */
 
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+// 隐藏调试
+.vc-switch {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+}
+
 html {
     line-height: 1.15;
     /* 1 */
@@ -542,7 +557,6 @@ template {
     display: none;
 }
 
-@import "./wepay.css";
 .weui-cell {
     background-color: #fff;
 }
